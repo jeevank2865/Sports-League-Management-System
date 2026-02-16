@@ -2,8 +2,6 @@
 
 A full-stack **Django-based Sports League Management System** designed to manage tournaments, teams, players, matches, points tables, and role-based dashboards (Admin, Captain, Referee, Guest).
 
-This project is suitable for **academic projects, mini/major projects, and real-world league management use cases**.
-
 ---
 
 ## 📌 Features
