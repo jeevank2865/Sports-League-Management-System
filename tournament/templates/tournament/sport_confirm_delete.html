@@ -1,0 +1,22 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title text-danger text-center">Confirm Delete</h4>
+                    <p class="text-center">Are you sure you want to delete <strong>"{{ object.name }}"</strong>?</p>
+                    <form method="post" class="text-center">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        <a href="{% url 'sport_list' %}" class="btn btn-secondary ms-2">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>   
+.sports-login-page {
+    min-height: 100vh;
+    padding: 40px 0;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* Dark + blur overlay to improve card visibility */
+.sports-login-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("{% static 'tournament/bg.jpg' %}");
+    backdrop-filter: blur(3px);
+}
+
+/* Bubbles */
+.sports-bubble {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(60px);
+    opacity: .65;
+    pointer-events: none;
+    z-index: 1;
+}
+.sports-bubble.one  { top:-140px; left:-120px;  width:330px; height:330px; background:rgba(59,130,246,.35); }
+.sports-bubble.two  { bottom:-120px; right:-140px; width:340px; height:340px; background:rgba(16,185,129,.35); }
+.sports-bubble.three{ bottom:-140px; left:40%;  width:260px; height:260px; background:rgba(139,92,246,.32); }
+
+/* ========== CARD ========== */
+.sports-card {
+    position: relative;
+    z-index: 10;
+    border-radius: 26px;
+    background: rgba(245, 243, 243, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(18, 95, 197, 0.9);
+    box-shadow: 0 22px 45px rgba(15,23,42,.3);
+    overflow: hidden;
+}
+
+/* ========== SPORTS ICON ========== */
+.sports-icon {
+    width: 70px;
+    height: 100px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #3b82f6, #10b981, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    color: white;
+    margin: auto;
+    margin-top: -40px;
+    box-shadow: 0 18px 45px rgba(37,99,235,.35);
+    animation: bounce 2s infinite ease-in-out;
+    z-index: 15;
+}
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* ========== BUTTON ========== */
+.btn-sports-login {
+    background: linear-gradient(135deg,#10b981,#059669);
+    color:rgb(248, 246, 246);
+    border:none;
+    border-radius:50px;
+    padding:12px;
+    font-weight:600;
+    transition:.25s;
+}
+.btn-sports-login:hover {
+    transform:translateY(-3px);
+    box-shadow:0 16px 32px rgba(16,185,129,.35);
+}
+
+/* ========== SIGNUP TEXT ========== */
+.signup-text a {
+    color:#2563eb;
+    font-weight:600;
+}
+.signup-text a:hover {
+    text-decoration:underline;
+}
+</style>
+
+<div class="sports-login-page">
+
+    <!-- Background bubbles -->
+    <div class="sports-bubble one"></div>
+    <div class="sports-bubble two"></div>
+    <div class="sports-bubble three"></div>
+
+    <div class="container position-relative" style="z-index:10;">
+        <div class="row justify-content-center">
+
+            <div class="col-md-6 col-lg-5">
+                <div class="sports-card p-4 mt-5">
+
+                    <!-- Icon -->
+                    <div class="sports-icon">🏆</div>
+
+                    <h3 class="text-center fw-bold mt-3 text-dark">Welcome</h3>
+                    <p class="text-center text-muted">Login to manage your sports league</p>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger text-center small">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" class="mt-3" novalidate>
+                        {% csrf_token %}
+                        {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}">
+                        {% endif %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-dark">
+                                 Username <span style="color:red">*</span>
+                            </label>
+                                <input type="text" name="username" class="form-control rounded-pill" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-dark">
+                                 Password <span style="color:red">*</span>
+                            </label>
+                                <input type="password" name="password" class="form-control rounded-pill" required>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn-sports-login">Login</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4 signup-text">
+                        <small>New here? <a href="{% url 'signup_guest' %}">Sign up as Guest</a></small>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.team-form-page {
+    min-height: 100vh;
+    padding: 40px 0;
+    background: radial-gradient(circle at top left, rgba(96,165,250,.14), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(147,51,234,.14), transparent 55%),
+                #f5f7fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-form-card {
+    width: 100%;
+    max-width: 520px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(226,232,240,0.9);
+    padding: 28px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 38px rgba(15,23,42,.15);
+    animation: fadeUp .6s ease-out;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.team-form-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: center;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-control {
+    border-radius: 12px !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 10px 14px !important;
+}
+.form-control:focus {
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 4px rgba(99,102,241,.15) !important;
+}
+
+.btn-save {
+    background: linear-gradient(135deg,#22c55e,#16a34a);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-weight: 600;
+    transition: .25s;
+}
+.btn-save:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(22,163,74,.35);
+}
+
+.btn-cancel {
+    border-radius: 14px;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+</style>
+
+
+<div class="team-form-page">
+
+    <div class="team-form-card">
+
+        <h2 class="team-form-title mb-3">
+            {{ form.instance.pk|yesno:"Edit Team,Add Team" }}
+        </h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-save">Save</button>
+                <a href="{% url 'team_list' %}" class="btn btn-secondary btn-cancel ms-2">Cancel</a>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

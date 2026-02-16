@@ -1,0 +1,92 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.page-wrapper {
+    min-height: 100vh;
+    padding: 40px 0;
+    background: radial-gradient(circle at top left, rgba(239,68,68,0.12), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(147,51,234,0.12), transparent 55%),
+                #f5f7fb;
+}
+
+.delete-card {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(239,68,68,0.35);
+    border-radius: 22px;
+    box-shadow: 0 16px 38px rgba(239,68,68,0.25);
+    padding: 35px;
+    backdrop-filter: blur(8px);
+    max-width: 600px;
+    margin: auto;
+}
+
+.delete-header {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    padding: 18px;
+    border-radius: 18px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 12px 28px rgba(220,38,38,0.45);
+    margin-bottom: 25px;
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-weight: 600;
+    color: white;
+    transition: .25s;
+}
+.btn-delete:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(220,38,38,0.35);
+}
+
+.btn-cancel {
+    background: #e5e7eb;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+.btn-cancel:hover {
+    background: #d1d5db;
+}
+</style>
+
+
+<div class="page-wrapper">
+    <div class="container">
+
+        <div class="delete-card">
+
+            <!-- Header -->
+            <div class="delete-header">
+                <h3 class="mb-0">Confirm Delete</h3>
+            </div>
+
+            <!-- Text -->
+            <p class="text-center fs-5 mb-4">
+                Are you sure you want to delete the tournament:  
+                <strong class="text-danger">"{{ object.name }}"</strong>?
+            </p>
+
+            <!-- Form -->
+            <form method="post" class="text-center">
+                {% csrf_token %}
+                <button type="submit" class="btn-delete">Yes, Delete</button>
+                <a href="{% url 'tournament_list' %}" class="btn-cancel ms-2">Cancel</a>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

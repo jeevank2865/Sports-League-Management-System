@@ -1,0 +1,16 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-danger mb-3">Confirm Delete</h2>
+        <p>Are you sure you want to delete the team <strong>{{ object.name }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'team_list' %}" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

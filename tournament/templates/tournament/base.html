@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sports League Management</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* GLOBAL BACKGROUND */
+        body {
+            background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        /* Blurred Decorative Circles */
+        .bg-circle {
+            position: fixed;
+            border-radius: 1000px;
+            filter: blur(80px);
+            opacity: 0.48;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .bg-circle.blue {
+            width: 380px;
+            height: 380px;
+            top: -120px;
+            right: -120px;
+            background: rgba(59,130,246,0.35);
+        }
+        .bg-circle.pink {
+            width: 360px;
+            height: 360px;
+            bottom: -130px;
+            left: -130px;
+            background: rgba(236,72,153,0.35);
+        }
+
+        /* NAVBAR */
+        .custom-navbar {
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+        }
+        .navbar-text {
+            font-weight: 500;
+        }
+        .btn-logout {
+            border-radius: 30px;
+            padding: 5px 14px;
+            font-size: 14px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            transition: 0.25s ease;
+        }
+        .btn-logout:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
+        /* CONTENT CONTAINER */
+        main.container {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Decorative Background Circles -->
+    <div class="bg-circle blue"></div>
+    <div class="bg-circle pink"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark custom-navbar">
+        <a class="navbar-brand text-light" href="{% url 'dashboard' %}">
+            ⚡ Sports League
+        </a>
+
+        {% if user.is_authenticated %}
+        <div class="d-flex align-items-center">
+            <span class="navbar-text text-light me-3">
+                Welcome, <strong>{{ user.username }}</strong>
+            </span>
+
+            <form action="{% url 'logout' %}" method="post" class="m-0 p-0">
+                {% csrf_token %}
+                <button class="btn-logout" type="submit">Logout</button>
+            </form>
+        </div>
+        {% endif %}
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

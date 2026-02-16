@@ -1,0 +1,90 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.page-wrapper {
+    min-height: 100vh;
+    padding: 40px 0;
+    background: radial-gradient(circle at top left, rgba(96,165,250,.12), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(139,92,246,.12), transparent 55%),
+                #f5f7fb;
+}
+
+.form-card {
+    background: rgba(255,255,255,.96);
+    padding: 30px;
+    border-radius: 22px;
+    border: 1px solid rgba(226,232,240,.85);
+    box-shadow: 0 18px 32px rgba(15,23,42,.14);
+    backdrop-filter: blur(10px);
+}
+
+.header-bar {
+    background: linear-gradient(135deg, #3b82f6, #2563eb, #7c3aed);
+    padding: 18px;
+    border-radius: 20px;
+    color: white;
+    box-shadow: 0 12px 28px rgba(37,99,235,.35);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: .25s;
+}
+.btn-save:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(5,150,105,.35);
+}
+
+.btn-cancel {
+    background: #e5e7eb;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    color: #374151;
+}
+.btn-cancel:hover {
+    background: #d1d5db;
+}
+</style>
+
+
+<div class="page-wrapper">
+    <div class="container">
+        
+        <!-- Gradient Header -->
+        <div class="header-bar">
+            <h2 class="mb-0">
+                {{ form.instance.pk|yesno:"Edit Tournament,Add Tournament" }}
+            </h2>
+        </div>
+
+        <div class="form-card mx-auto" style="max-width:650px;">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn-save">Save</button>
+                    <a href="{% url 'tournament_list' %}" class="btn-cancel ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

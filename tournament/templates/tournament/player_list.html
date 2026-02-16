@@ -1,0 +1,144 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.player-page {
+    min-height: 100vh;
+    padding: 40px 0 60px 0;
+    background: radial-gradient(circle at top left, rgba(96,165,250,.14), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(147,51,234,.14), transparent 55%),
+                #f5f7fb;
+    position: relative;
+    overflow: hidden;
+}
+
+.player-bubble {
+    position:absolute;
+    border-radius:999px;
+    filter:blur(65px);
+    opacity:.7;
+    pointer-events:none;
+}
+.player-bubble.blue { top:-150px; right:-150px; width:350px; height:350px; background:rgba(59,130,246,.28); }
+.player-bubble.purple { bottom:-150px; left:-150px; width:350px; height:350px; background:rgba(147,51,234,.22); }
+
+/* Card & Title */
+.player-card {
+    border-radius:22px;
+    background:rgba(255,255,255,0.92);
+    border:1px solid rgba(226,232,240,0.9);
+    padding:25px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 20px 40px rgba(15,23,42,0.15);
+}
+
+.player-title {
+    font-size:30px;
+    font-weight:700;
+    color:#0f172a;
+}
+
+/* Add button */
+.btn-add {
+    background:linear-gradient(135deg,#10b981,#059669);
+    color:white;
+    padding:10px 20px;
+    border-radius:14px;
+    font-weight:600;
+    border:none;
+    transition:.25s;
+}
+.btn-add:hover {
+    transform:translateY(-3px);
+    box-shadow:0 12px 26px rgba(16,185,129,.35);
+}
+
+/* List Items */
+.player-item {
+    border-radius:14px;
+    border:1px solid #e5e7eb;
+    padding:16px;
+    background:rgba(255,255,255,0.85);
+    margin-bottom:12px;
+    transition:.25s;
+}
+.player-item:hover {
+    transform:translateY(-3px);
+    background:white;
+    box-shadow:0 12px 28px rgba(15,23,42,0.15);
+}
+
+/* Action Buttons */
+.btn-edit {
+    background:#fbbf24;
+    border:none;
+    padding:6px 12px;
+    font-weight:600;
+    border-radius:10px;
+    transition:.2s;
+}
+.btn-edit:hover {
+    background:#f59e0b;
+    color:white;
+}
+
+.btn-delete {
+    background:#ef4444;
+    border:none;
+    padding:6px 12px;
+    font-weight:600;
+    border-radius:10px;
+    color:white;
+    transition:.2s;
+}
+.btn-delete:hover {
+    background:#dc2626;
+}
+</style>
+
+
+<div class="player-page">
+
+    <div class="player-bubble blue"></div>
+    <div class="player-bubble purple"></div>
+
+    <div class="container">
+
+        <div class="player-card mb-4">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="player-title">Players</h2>
+                <a href="{% url 'player_create' %}" class="btn btn-add">➕ Add Player</a>
+            </div>
+
+            <!-- Player List -->
+            {% if players %}
+                {% for player in players %}
+                    <div class="player-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong class="fs-5">{{ player.name }}</strong>
+                            <div class="text-muted small">
+                                Position: {{ player.position }} |
+                                Age: {{ player.age }} |
+                                Team: <strong>{{ player.team.name }}</strong>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a href="{% url 'player_update' player.id %}" class="btn-edit me-2">✏️ Edit</a>
+                            <a href="{% url 'player_delete' player.id %}" class="btn-delete">🗑 Delete</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning">No players found.</div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

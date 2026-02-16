@@ -1,0 +1,122 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* Background */
+.player-form-page {
+    min-height: 100vh;
+    padding: 40px 0;
+    background: radial-gradient(circle at top left, rgba(147,197,253,.15), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(196,181,253,.15), transparent 55%),
+                #f5f7fb;
+    position: relative;
+    overflow: hidden;
+}
+.player-bubble {
+    position:absolute;
+    border-radius:999px;
+    filter:blur(60px);
+    opacity:.7;
+}
+.player-bubble.blue { top:-150px; right:-150px; width:350px; height:350px; background:rgba(59,130,246,.3); }
+.player-bubble.purple { bottom:-150px; left:-150px; width:350px; height:350px; background:rgba(168,85,247,.25); }
+
+/* Card */
+.form-card {
+    border-radius:22px;
+    background:rgba(255,255,255,.95);
+    border:1px solid rgba(226,232,240,.85);
+    box-shadow:0 20px 40px rgba(15,23,42,.18);
+    padding:28px;
+    backdrop-filter:blur(8px);
+}
+
+/* Header */
+.form-header {
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    padding:18px;
+    border-radius:18px;
+    color:white;
+    text-align:center;
+    margin-top:-40px;
+    margin-bottom:20px;
+    box-shadow:0 12px 30px rgba(37,99,235,.35);
+}
+
+/* Buttons */
+.btn-save {
+    background:linear-gradient(135deg,#10b981,#059669);
+    border:none;
+    color:white;
+    padding:10px 20px;
+    border-radius:14px;
+    font-weight:600;
+    transition:.25s;
+}
+.btn-save:hover {
+    transform:translateY(-2px);
+    box-shadow:0 12px 26px rgba(16,185,129,.35);
+}
+
+.btn-cancel {
+    background:#e5e7eb;
+    border:none;
+    padding:10px 20px;
+    border-radius:14px;
+    font-weight:600;
+    transition:.25s;
+}
+.btn-cancel:hover {
+    background:#d1d5db;
+}
+</style>
+
+
+<div class="player-form-page">
+    <div class="player-bubble blue"></div>
+    <div class="player-bubble purple"></div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-6">
+
+                <div class="form-card">
+
+                    <!-- Header Title -->
+                    <div class="form-header">
+                        <h3 class="mb-0">
+                            {{ form.instance.pk|yesno:"Edit Player,Add Player" }}
+                        </h3>
+                    </div>
+
+                    <!-- Form -->
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label class="fw-semibold">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <div class="mt-4 d-flex justify-content-between">
+                            <button type="submit" class="btn-save">Save</button>
+                            <a href="{% url 'player_list' %}" class="btn-cancel">Cancel</a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

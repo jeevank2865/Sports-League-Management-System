@@ -1,0 +1,143 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* Background effects */
+.ref-dashboard {
+    min-height: 100vh;
+    padding: 40px 0 60px;
+    background: radial-gradient(circle at top left, rgba(96,165,250,0.12), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(167,139,250,0.12), transparent 55%),
+                #f5f7fb;
+    position: relative;
+    overflow: hidden;
+}
+
+.ref-bubble {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(60px);
+    opacity: 0.7;
+    pointer-events: none;
+}
+.ref-bubble.blue { top:-130px; right:-130px; width:340px; height:340px; background:rgba(59,130,246,0.25); }
+.ref-bubble.purple { bottom:-150px; left:-150px; width:300px; height:300px; background:rgba(147,51,234,0.22); }
+
+/* Header */
+.ref-icon {
+    width:70px;height:70px;border-radius:20px;
+    background:linear-gradient(135deg,#06b6d4,#2563eb,#7c3aed);
+    display:flex;align-items:center;justify-content:center;
+    font-size:32px;color:white;
+    margin:auto;box-shadow:0 20px 40px rgba(37,99,235,0.35);
+}
+
+/* Cards */
+.ref-card {
+    border-radius:22px;
+    background:rgba(255,255,255,0.95);
+    border:1px solid rgba(226,232,240,0.9);
+    padding:20px 22px;
+    backdrop-filter:blur(8px);
+    transition:0.25s;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+.ref-card:hover {
+    transform:translateY(-5px);
+    box-shadow:0 20px 36px rgba(15,23,42,0.22);
+}
+
+/* Card icon */
+.ref-card-icon {
+    width:48px;height:48px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;color:white;
+}
+
+/* Text */
+.ref-card-title {
+    font-size:17px;font-weight:600;color:#0f172a;margin:0;
+}
+.ref-card-desc {
+    font-size:13px;color:#6b7280;margin:0;
+}
+
+/* Gradient sets */
+.grad-blue { background:linear-gradient(135deg,#3b82f6,#2563eb); }
+.grad-purple { background:linear-gradient(135deg,#8b5cf6,#7c3aed); }
+.grad-cyan { background:linear-gradient(135deg,#06b6d4,#0ea5e9); }
+.grad-yellow { background:linear-gradient(135deg,#fbbf24,#f59e0b); }
+
+</style>
+
+<div class="ref-dashboard">
+    <div class="ref-bubble blue"></div>
+    <div class="ref-bubble purple"></div>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="text-center mb-4">
+            <div class="ref-icon">⚖️</div>
+            <h2 class="mt-3 fw-bold">Referee Control Panel</h2>
+            <p class="text-muted">Manage match scoring, view teams and players.</p>
+        </div>
+
+        <!-- MENU CARDS -->
+        <div class="row g-4">
+
+            <!-- Update Match Results -->
+            <div class="col-12 col-md-6">
+                <a href="{% url 'match_list' %}" class="ref-card">
+                    <div class="ref-card-icon grad-purple">📝</div>
+                    <div>
+                        <p class="ref-card-title">Update Match Results</p>
+                        <p class="ref-card-desc">Fill in scores and declare winners</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Player List -->
+            <div class="col-12 col-md-6">
+                <a href="{% url 'player_list' %}" class="ref-card">
+                    <div class="ref-card-icon grad-blue">👥</div>
+                    <div>
+                        <p class="ref-card-title">View Players</p>
+                        <p class="ref-card-desc">Check players across tournaments</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Team List -->
+            <div class="col-12 col-md-6">
+                <a href="{% url 'team_list' %}" class="ref-card">
+                    <div class="ref-card-icon grad-cyan">🧑‍🤝‍🧑</div>
+                    <div>
+                        <p class="ref-card-title">View Teams</p>
+                        <p class="ref-card-desc">See team details & captains</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Points Table -->
+           <!-- Points Table -->
+<div class="col-12 col-md-6">
+    <a href="{% url 'points_table' tournament.id %}" class="ref-card">
+        <div class="ref-card-icon grad-yellow">📊</div>
+        <div>
+            <p class="ref-card-title">View Points Table</p>
+            <p class="ref-card-desc">Tournament-wise standings</p>
+        </div>
+    </a>
+</div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

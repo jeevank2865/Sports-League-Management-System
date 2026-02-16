@@ -1,0 +1,135 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* Background */
+.guest-page {
+    min-height: 100vh;
+    padding: 40px 0 60px;
+    background: radial-gradient(circle at top left, rgba(96,165,250,.12), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(167,139,250,.12), transparent 55%),
+                #f5f7fb;
+    position: relative;
+    overflow: hidden;
+}
+.guest-bubble {
+    position: absolute;border-radius:999px;filter:blur(60px);opacity:.7;pointer-events:none;
+}
+.guest-bubble.blue { top:-130px; right:-130px; width:340px; height:340px; background:rgba(59,130,246,.25); }
+.guest-bubble.purple { bottom:-130px; left:-130px; width:300px; height:300px; background:rgba(139,92,246,.25); }
+
+/* Header */
+.guest-icon {
+    width:70px;height:70px;border-radius:22px;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    display:flex;align-items:center;justify-content:center;
+    font-size:32px;color:white;margin:auto;
+    box-shadow:0 18px 40px rgba(37,99,235,.35);
+}
+
+/* Cards */
+.guest-card {
+    border-radius:22px;
+    background:rgba(255,255,255,.95);
+    border:1px solid rgba(226,232,240,.9);
+    padding:20px 22px;
+    backdrop-filter:blur(8px);
+    transition:.25s;
+    text-decoration:none;
+    display:flex;align-items:center;gap:15px;
+}
+.guest-card:hover {
+    transform:translateY(-5px);
+    box-shadow:0 20px 36px rgba(15,23,42,.22);
+}
+
+.guest-card-icon {
+    width:48px;height:48px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;color:white;
+}
+.guest-card-title { font-size:17px;font-weight:600;color:#0f172a;margin:0; }
+.guest-card-desc { font-size:13px;color:#6b7280;margin:0; }
+
+.grad-blue { background:linear-gradient(135deg,#3b82f6,#2563eb); }
+.grad-green { background:linear-gradient(135deg,#10b981,#059669); }
+.grad-yellow { background:linear-gradient(135deg,#fbbf24,#f59e0b); }
+</style>
+
+
+<div class="guest-page">
+    <div class="guest-bubble blue"></div>
+    <div class="guest-bubble purple"></div>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="text-center mb-4">
+            <div class="guest-icon">👤</div>
+            <h2 class="mt-3 fw-bold">Guest Dashboard</h2>
+            <p class="text-muted">Browse teams, players and check tournament standings.</p>
+        </div>
+
+        <!-- Menu Cards -->
+        <div class="row g-4">
+
+            <!-- View Players -->
+            <div class="col-12 col-md-6">
+                <a href="{% url 'player_list' %}" class="guest-card">
+                    <div class="guest-card-icon grad-blue">👥</div>
+                    <div>
+                        <p class="guest-card-title">View Player List</p>
+                        <p class="guest-card-desc">See all players & positions</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- View Teams -->
+            <div class="col-12 col-md-6">
+                <a href="{% url 'team_list' %}" class="guest-card">
+                    <div class="guest-card-icon grad-green">🧑‍🤝‍🧑</div>
+                    <div>
+                        <p class="guest-card-title">View Team List</p>
+                        <p class="guest-card-desc">Explore teams & coaches</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Points Table Dropdown -->
+        <div class="mt-5 card shadow guest-card" style="padding:25px;">
+            <div class="guest-card-icon grad-yellow">📊</div>
+            <div class="flex-grow-1">
+                <h5 class="guest-card-title">Points Table</h5>
+                <p class="guest-card-desc mb-2">Select a tournament to check standings</p>
+
+                <div class="input-group">
+                    <select id="tournamentSelect" class="form-select">
+                        {% for tournament in tournaments %}
+                            <option value="{{ tournament.id }}">{{ tournament.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="btn btn-warning" onclick="goToPointTable()">Go</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+function goToPointTable() {
+    const id = document.getElementById('tournamentSelect').value;
+    if (id) {
+        window.location.href = `/points-table/${id}/`;
+    } else {
+        alert("Please select a tournament.");
+    }
+}
+</script>
+
+{% endblock %}

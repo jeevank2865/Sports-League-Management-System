@@ -1,0 +1,124 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.match-form-page {
+    min-height: 100vh;
+    padding: 40px 0;
+    background: radial-gradient(circle at top left, rgba(96,165,250,.12), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(147,51,234,.12), transparent 55%),
+                #f5f7fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.match-form-card {
+    width: 100%;
+    max-width: 650px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.96);
+    border: 1px solid rgba(226,232,240,.85);
+    padding: 30px 28px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 42px rgba(15,23,42,.18);
+    animation: fadeUp .6s ease-out;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.match-form-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-control {
+    border-radius: 12px !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 10px 14px !important;
+}
+.form-control:focus {
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 4px rgba(99,102,241,.18) !important;
+}
+
+.btn-save {
+    background: linear-gradient(135deg,#22c55e,#16a34a);
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 14px;
+    font-weight: 600;
+    transition: .25s;
+}
+.btn-save:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(22,163,74,.35);
+}
+
+.btn-cancel {
+    border-radius: 14px;
+    font-weight: 600;
+    padding: 10px 18px;
+}
+</style>
+
+
+<div class="match-form-page">
+
+    <div class="match-form-card">
+
+        <h2 class="match-form-title text-center mb-4">
+            {{ form.instance.pk|yesno:"Edit Match,Schedule New Match" }}
+        </h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                {{ form.sport.label_tag }}
+                {{ form.sport }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.tournament.label_tag }}
+                {{ form.tournament }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.team1.label_tag }}
+                {{ form.team1 }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.team2.label_tag }}
+                {{ form.team2 }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.scheduled_date.label_tag }}
+                {{ form.scheduled_date }}
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-save">Save</button>
+                <a href="{% url 'match_list' %}" class="btn btn-secondary btn-cancel ms-2">Cancel</a>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,605 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+/* ===========================
+   GLOBAL PAGE BACKGROUND
+=========================== */
+body {
+    background: #f5f7fb;
+}
+
+.admin-page {
+    min-height: 100vh;
+    position: relative;
+    padding: 40px 0 60px 0;
+    background: radial-gradient(circle at top left, rgba(59,130,246,0.09), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(147,51,234,0.08), transparent 60%),
+                #f5f7fb;
+    overflow: hidden;
+}
+
+/* Background Blurred Circles */
+.bg-bubble {
+    position: fixed;
+    border-radius: 1000px;
+    filter: blur(55px);
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
+}
+.bg-bubble.blue {
+    top: -120px;
+    right: -120px;
+    width: 360px;
+    height: 360px;
+    background: rgba(59,130,246,0.25);
+}
+.bg-bubble.purple {
+    bottom: -120px;
+    left: -120px;
+    width: 360px;
+    height: 360px;
+    background: rgba(139,92,246,0.2);
+}
+
+.admin-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+.admin-header-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 30px;
+    box-shadow: 0 18px 40px rgba(37,99,235,0.35);
+    position: relative;
+}
+
+.admin-header-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 15px;
+    height: 15px;
+    background: #22c55e;
+    border-radius: 999px;
+    border: 2px solid #fff;
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    70% { transform: scale(1.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.admin-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 18px;
+    margin-bottom: 8px;
+}
+
+.admin-subtitle {
+    color: #6b7280;
+    max-width: 540px;
+    margin: 0 auto 28px auto;
+    font-size: 15px;
+}
+
+/* ===========================
+   STAT CARDS (TOP ROW)
+=========================== */
+.stat-card {
+    position: relative;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(226,232,240,0.9);
+    padding: 18px;
+    overflow: hidden;
+    backdrop-filter: blur(6px);
+    transition: all 0.25s ease;
+}
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(15,23,42,0.18);
+}
+
+.stat-bubble {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    border-radius: 999px;
+    transition: 0.5s ease;
+}
+.stat-card:hover .stat-bubble {
+    transform: scale(1.2);
+}
+
+.stat-icon-wrap {
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    box-shadow: 0 14px 26px rgba(15,23,42,0.28);
+}
+
+/* Stat text */
+.stat-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6b7280;
+}
+.stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #020617;
+}
+.stat-label {
+    font-size: 13px;
+    color: #6b7280;
+}
+.stat-trend {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Colors */
+.bg-grad-blue { background: linear-gradient(135deg,#3b82f6,#2563eb); }
+.bg-grad-emerald { background: linear-gradient(135deg,#10b981,#059669); }
+.bg-grad-purple { background: linear-gradient(135deg,#8b5cf6,#7c3aed); }
+.bg-grad-amber { background: linear-gradient(135deg,#fbbf24,#f59e0b); }
+
+.bubble-blue { background: rgba(96,165,250,0.18); }
+.bubble-emerald { background: rgba(52,211,153,0.2); }
+.bubble-purple { background: rgba(167,139,250,0.18); }
+.bubble-amber { background: rgba(252,211,77,0.22); }
+
+.trend-up-blue { color: #2563eb; }
+.trend-up-emerald { color: #059669; }
+.trend-up-purple { color: #7c3aed; }
+.trend-up-amber { color: #d97706; }
+
+/* ===========================
+   ACTION SECTION CARDS
+=========================== */
+.section-card {
+    position: relative;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    background: rgba(255,255,255,0.95);
+    padding: 18px;
+    overflow: hidden;
+    backdrop-filter: blur(6px);
+    transition: all 0.25s ease;
+}
+.section-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 34px rgba(15,23,42,0.22);
+}
+
+.section-top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+}
+
+.section-soft-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    border-bottom-left-radius: 120px;
+    opacity: 0.3;
+}
+
+.section-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #fff;
+    box-shadow: 0 16px 34px rgba(15,23,42,0.26);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 3px;
+}
+.section-desc {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 14px;
+}
+
+.section-action-count {
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Action Buttons */
+.action-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 10px;
+    font-size: 14px;
+    color: #0f172a;
+    text-decoration: none;
+    margin-bottom: 8px;
+}
+.action-button:hover {
+    background: #ffffff;
+    border-color: #d1d5db;
+    box-shadow: 0 10px 22px rgba(15,23,42,0.18);
+    transform: translateY(-2px);
+}
+
+.action-icon-wrap {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-bg-blue { background: #dbeafe; }
+.icon-bg-emerald { background: #dcfce7; }
+.icon-bg-amber { background: #fef3c7; }
+.icon-bg-cyan { background: #e0f2fe; }
+.icon-bg-purple { background: #ede9fe; }
+
+.dot-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    opacity: 0;
+}
+.action-button:hover .dot-indicator {
+    opacity: 1;
+}
+
+.dot-blue { background: #2563eb; }
+.dot-emerald { background: #16a34a; }
+.dot-amber { background: #f59e0b; }
+.dot-cyan { background: #0891b2; }
+.dot-purple { background: #7c3aed; }
+
+</style>
+
+
+<!-- ======================
+     HTML BODY
+====================== -->
+
+<div class="admin-page">
+
+    <div class="bg-bubble blue"></div>
+    <div class="bg-bubble purple"></div>
+
+    <div class="container admin-container">
+
+        <!-- HEADER -->
+        <div class="text-center mb-4">
+            <div class="d-flex justify-content-center">
+                <div class="admin-header-icon">
+                    ⚡
+                    <div class="admin-header-badge"></div>
+                </div>
+            </div>
+
+            <h1 class="admin-title">Admin Control Panel</h1>
+            <p class="admin-subtitle">
+                Complete control center for managing your sports league, tournaments, teams, and players.
+            </p>
+        </div>
+
+
+        <!-- TOP STATS -->
+        <div class="row g-3 mb-4">
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-bubble bubble-blue"></div>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <div class="stat-title">Active Tournaments</div>
+                            <div class="stat-value">{{ live_tournaments }}</div>
+                            <div class="stat-label">Currently running events</div>
+                        </div>
+                        <div class="stat-icon-wrap bg-grad-blue">🏆</div>
+                    </div>
+                    <div class="stat-trend trend-up-blue">⬆ +1 this week</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-bubble bubble-emerald"></div>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <div class="stat-title">Registered Teams</div>
+                            <div class="stat-value">{{ total_teams }}</div>
+                            <div class="stat-label">Participating squads</div>
+                        </div>
+                        <div class="stat-icon-wrap bg-grad-emerald">👥</div>
+                    </div>
+                    <div class="stat-trend trend-up-emerald">⬆ Growing roster</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-bubble bubble-purple"></div>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <div class="stat-title">Total Players</div>
+                            <div class="stat-value">{{ total_players }}</div>
+                            <div class="stat-label">Registered athletes</div>
+                        </div>
+                        <div class="stat-icon-wrap bg-grad-purple">🙋</div>
+                    </div>
+                    <div class="stat-trend trend-up-purple">⬆ +18 this week</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-bubble bubble-amber"></div>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <div class="stat-title">Matches This Week</div>
+                            <div class="stat-value">{{ upcoming_matches }}</div>
+                            <div class="stat-label">Scheduled fixtures</div>
+                        </div>
+                        <div class="stat-icon-wrap bg-grad-amber">📅</div>
+                    </div>
+                    <div class="stat-trend trend-up-amber">⏱ Next kickoff soon</div>
+                </div>
+            </div>
+
+        </div> <!-- END STATS -->
+
+
+        <!-- ACTION SECTIONS -->
+        <div class="row g-4">
+
+            <div class="col-12">
+                <div class="row g-4">
+
+
+                    <!-- CORE SETUP -->
+                    <div class="col-12 col-md-6">
+                        <div class="section-card">
+
+                            <div class="section-top-accent" style="background: linear-gradient(90deg,#3b82f6,#2563eb);"></div>
+                            <div class="section-soft-bg" style="background: linear-gradient(135deg,#dbeafe,#bfdbfe);"></div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="section-icon bg-grad-blue">⚙️</div>
+                                <div class="section-action-count">2 actions</div>
+                            </div>
+
+                            <div class="section-title">Core Setup</div>
+                            <div class="section-desc">Essential configuration for your league.</div>
+
+                            <a href="{% url 'sport_create' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-blue">➕</div>
+                                <span>Add Sport</span>
+                                <div class="dot-indicator dot-blue"></div>
+                            </a>
+
+                            <a href="{% url 'tournament_create' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-blue">🏆</div>
+                                <span>Add Tournament</span>
+                                <div class="dot-indicator dot-blue"></div>
+                            </a>
+
+                        </div>
+                    </div>
+
+
+                    <!-- TEAMS & PLAYERS -->
+                    <div class="col-12 col-md-6">
+                        <div class="section-card">
+
+                            <div class="section-top-accent" style="background: linear-gradient(90deg,#22c55e,#16a34a);"></div>
+                            <div class="section-soft-bg" style="background: linear-gradient(135deg,#dcfce7,#bbf7d0);"></div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="section-icon bg-grad-emerald">👥</div>
+                                <div class="section-action-count">4 actions</div>
+                            </div>
+
+                            <div class="section-title">Teams & Players</div>
+                            <div class="section-desc">Manage rosters and team members.</div>
+
+                            <a href="{% url 'team_create' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-emerald">➕</div>
+                                <span>Create Team</span>
+                                <div class="dot-indicator dot-emerald"></div>
+                            </a>
+
+                            <a href="{% url 'player_create' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-emerald">🧍</div>
+                                <span>Add Player</span>
+                                <div class="dot-indicator dot-emerald"></div>
+                            </a>
+
+                            <a href="{% url 'team_list' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-emerald">📋</div>
+                                <span>Manage Teams</span>
+                                <div class="dot-indicator dot-emerald"></div>
+                            </a>
+
+                            <a href="{% url 'player_list' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-emerald">🎮</div>
+                                <span>Manage Players</span>
+                                <div class="dot-indicator dot-emerald"></div>
+                            </a>
+
+                        </div>
+                    </div>
+
+
+                    <!-- MATCHES -->
+                    <div class="col-12 col-md-6">
+                        <div class="section-card">
+
+                            <div class="section-top-accent" style="background: linear-gradient(90deg,#fbbf24,#f59e0b);"></div>
+                            <div class="section-soft-bg" style="background: linear-gradient(135deg,#fef3c7,#fde68a);"></div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="section-icon bg-grad-amber">📅</div>
+                                <div class="section-action-count">2 actions</div>
+                            </div>
+
+                            <div class="section-title">Matches</div>
+                            <div class="section-desc">Schedule and update match details.</div>
+
+                            <a href="{% url 'match_create' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-amber">📅</div>
+                                <span>Schedule Match</span>
+                                <div class="dot-indicator dot-amber"></div>
+                            </a>
+
+                            <a href="{% url 'match_list' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-amber">📊</div>
+                                <span>Enter Match Results</span>
+                                <div class="dot-indicator dot-amber"></div>
+                            </a>
+
+                        </div>
+                    </div>
+
+
+                    <!-- VIEW DATA -->
+                    <div class="col-12 col-md-6">
+                        <div class="section-card">
+
+                            <div class="section-top-accent" style="background: linear-gradient(90deg,#06b6d4,#0ea5e9);"></div>
+                            <div class="section-soft-bg" style="background: linear-gradient(135deg,#e0f2fe,#bae6fd);"></div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="section-icon" style="background: linear-gradient(135deg,#06b6d4,#0ea5e9);">👁️</div>
+                                <div class="section-action-count">3 actions</div>
+                            </div>
+
+                            <div class="section-title">View Data</div>
+                            <div class="section-desc">Browse and analyze your records.</div>
+
+                            <a href="{% url 'player_list' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-cyan">👁️</div>
+                                <span>View Players</span>
+                                <div class="dot-indicator dot-cyan"></div>
+                            </a>
+
+                            <a href="{% url 'team_list' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-cyan">👁️</div>
+                                <span>View Teams</span>
+                                <div class="dot-indicator dot-cyan"></div>
+                            </a>
+
+                            <a href="{% url 'tournament_list' %}" class="action-button">
+                                <div class="action-icon-wrap icon-bg-cyan">👁️</div>
+                                <span>View Tournaments</span>
+                                <div class="dot-indicator dot-cyan"></div>
+                            </a>
+
+                        </div>
+                    </div>
+
+
+                    <!-- SPECIAL ACTIONS -->
+                    <div class="col-12">
+                        <div class="section-card">
+
+                            <div class="section-top-accent" style="background: linear-gradient(90deg,#8b5cf6,#7c3aed);"></div>
+                            <div class="section-soft-bg" style="background: linear-gradient(135deg,#ede9fe,#ddd6fe);"></div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="section-icon bg-grad-purple">🛡️</div>
+                                <div class="section-action-count">3 actions</div>
+                            </div>
+
+                            <div class="section-title">Special Actions</div>
+                            <div class="section-desc">Advanced administrative controls.</div>
+
+                            <div class="row g-2">
+                                <div class="col-12 col-md-4">
+                                    <a href="{% url 'points_table' 1 %}" class="action-button">
+                                        <div class="action-icon-wrap icon-bg-purple">📊</div>
+                                        <span>View Points Table</span>
+                                        <div class="dot-indicator dot-purple"></div>
+                                    </a>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <a href="{% url 'create_captain' %}" class="action-button">
+                                        <div class="action-icon-wrap icon-bg-purple">🎯</div>
+                                        <span>Create Captain Account</span>
+                                        <div class="dot-indicator dot-purple"></div>
+                                    </a>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <a href="{% url 'create_referee' %}" class="action-button">
+                                        <div class="action-icon-wrap icon-bg-purple">⚖️</div>
+                                        <span>Create Referee Account</span>
+                                        <div class="dot-indicator dot-purple"></div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div> <!-- END MAIN GRID -->
+
+    </div>
+
+</div>
+
+
+{% endblock %}

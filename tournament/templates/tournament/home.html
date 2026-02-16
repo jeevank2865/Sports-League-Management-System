@@ -1,0 +1,19 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1 class="display-4 mb-4">Welcome to Sports League Management System</h1>
+    <p class="lead mb-4">Manage sports tournaments, teams, players, and match results efficiently.</p>
+
+    {% if user.is_authenticated %}
+        <div class="alert alert-success" role="alert">
+            Welcome, {{ user.username }}! You're logged in.
+        </div>
+        <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-success btn-lg me-2">Login</a>
+        <a href="{% url 'signup_guest' %}" class="btn btn-outline-primary btn-lg">Signup as Guest</a>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends 'tournament/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.points-page {
+    min-height: 100vh;
+    padding: 40px 0 60px 0;
+    background: radial-gradient(circle at top left, rgba(96,165,250,.14), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(147,51,234,.14), transparent 55%),
+                #f5f7fb;
+    position: relative;
+    overflow: hidden;
+}
+
+.points-bubble {
+    position:absolute;
+    border-radius:999px;
+    filter:blur(65px);
+    opacity:.7;
+    pointer-events:none;
+}
+.points-bubble.blue { top:-150px; right:-150px; width:350px; height:350px; background:rgba(59,130,246,.28); }
+.points-bubble.purple { bottom:-150px; left:-150px; width:350px; height:350px; background:rgba(147,51,234,.22); }
+
+/* Card */
+.points-card {
+    border-radius:24px;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(226,232,240,.9);
+    padding:22px;
+    box-shadow:0 20px 40px rgba(15,23,42,0.15);
+}
+
+.points-title {
+    font-size:28px;
+    font-weight:700;
+    color:#0f172a;
+}
+
+/* Dropdown + Button */
+.select-group select {
+    border-radius:14px;
+    padding:10px;
+    border:1px solid #d1d5db;
+}
+
+.btn-go {
+    padding:10px 22px;
+    border-radius:14px;
+    font-weight:600;
+    background:linear-gradient(135deg,#fbbf24,#f59e0b);
+    color:white;
+    border:none;
+    transition:.2s;
+}
+.btn-go:hover {
+    transform:translateY(-2px);
+    box-shadow:0 10px 22px rgba(234,179,8,.35);
+}
+
+/* Table */
+.table thead {
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+}
+
+.table tbody tr:hover {
+    background:#eef2ff !important;
+    transform:scale(1.01);
+}
+</style>
+
+<div class="points-page">
+    <div class="points-bubble blue"></div>
+    <div class="points-bubble purple"></div>
+
+    <div class="container">
+
+        <div class="points-card mb-4">
+
+            <!-- Title -->
+            {% if tournament %}
+                <h2 class="points-title text-center mb-4">
+                    Points Table – {{ tournament.name }}
+                </h2>
+            {% else %}
+                <h2 class="points-title text-center mb-4 text-danger">
+                    Points Table
+                </h2>
+            {% endif %}
+
+            <!-- Tournament Select -->
+            <div class="mb-4">
+                <h5 class="fw-semibold">Select Tournament</h5>
+                <div class="input-group select-group">
+                    <select id="tournamentSelect" class="form-select">
+                        {% for t in tournaments %}
+                            <option value="{{ t.id }}" {% if tournament.id == t.id %}selected{% endif %}>
+                                {{ t.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn-go" onclick="goToPointTable()">Go</button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive mt-4">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Played</th>
+                            <th>Won</th>
+                            <th>Draw</th>
+                            <th>Lost</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if points %}
+                            {% for team, data in points %}
+                            <tr>
+                                <td class="fw-semibold">{{ team }}</td>
+                                <td>{{ data.played }}</td>
+                                <td>{{ data.won }}</td>
+                                <td>{{ data.draw }}</td>
+                                <td>{{ data.lost }}</td>
+                                <td class="fw-bold text-primary">{{ data.points }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-3">
+                                    No match data available.
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} mt-3">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<script>
+function goToPointTable() {
+    const id = document.getElementById("tournamentSelect").value;
+    if (id) {
+        window.location.href = `/points-table/${id}/`;
+    }
+}
+</script>
+
+{% endblock %}
