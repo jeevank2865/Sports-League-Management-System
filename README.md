@@ -75,3 +75,21 @@ This project is suitable for **academic projects, mini/major projects, and real-
 ---
 
 ## 📂 Project Structure
+
+Sports-League-Management-System/
+│
+├── slms/                   # Project settings
+├── tournament/             # Main app
+│   ├── models.py
+│   ├── views.py
+│   ├── forms.py
+│   ├── admin.py
+│   ├── urls.py
+│   └── templates/
+│
+├── static/                 # CSS, images
+├── manage.py
+├── requirements.txt
+└── README.md
+
+
