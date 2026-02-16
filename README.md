@@ -76,18 +76,18 @@ A full-stack **Django-based Sports League Management System** designed to manage
 
 Sports-League-Management-System/
 │
-├── slms/                   # Project settings
-├── tournament/             # Main app
-│   ├── models.py
-│   ├── views.py
-│   ├── forms.py
-│   ├── admin.py
-│   ├── urls.py
-│   └── templates/
+├── slms/                   # Django project settings
 │
-├── static/                 # CSS, images
-├── manage.py
-├── requirements.txt
-└── README.md
-
+├── tournament/             # Main application
+│   ├── models.py           # Database models
+│   ├── views.py            # Business logic
+│   ├── forms.py            # Django forms
+│   ├── admin.py            # Admin customizations
+│   ├── urls.py             # App URL routes
+│   └── templates/          # HTML templates
+│
+├── static/                 # CSS, images, JS
+├── manage.py               # Django entry point
+├── requirements.txt        # Python dependencies
+└── README.md               # Project documentations
 
