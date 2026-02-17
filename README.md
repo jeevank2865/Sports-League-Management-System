@@ -149,7 +149,8 @@ Foreign key relationships ensure data consistency and integrity.
 -	Result Management
 -	Points Table Calculation
 ## Results
-Open the application: [HERE]([https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata](https://jeevan07.pythonanywhere.com/login/))
+Open the application: [HERE](https://jeevan07.pythonanywhere.com/login/) 
+<br>
 The Sports League Management System successfully provides:
 -	Secure multi-role access
 -	Accurate match and result tracking
@@ -182,9 +183,6 @@ The Sports League Management System successfully provides:
 <br>
 <br>
 <img width="1467" height="835" alt="Screenshot 2026-02-17 at 9 29 04 PM" src="https://github.com/user-attachments/assets/4cf42f2c-3fcb-473c-8823-760786d3ed47" />
-
-<br>
-
 <br>
 <br>
 <br>
