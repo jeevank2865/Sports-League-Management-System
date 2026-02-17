@@ -69,7 +69,7 @@ def dashboard(request):
     return render(request, 'tournament/referee_dashboard.html', {
         'tournament': tournament
     })
-    })
+    
     else:
         tournaments = Tournament.objects.all()
         return render(request, 'tournament/guest_dashboard.html', {'tournaments': tournaments})
@@ -442,3 +442,4 @@ def create_referee(request):
         form = CustomUserCreationForm()
 
     return render(request, 'tournament/create_referee.html', {'form': form})
+
