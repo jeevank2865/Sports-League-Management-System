@@ -169,7 +169,8 @@ The Sports League Management System successfully provides:
 <br>
 <br>
 <br>
-<img width="1470" height="831" alt="Screenshot 2026-02-17 at 9 31 03 PM" src="https://github.com/user-attachments/assets/045b97ef-7ca7-40a8-af92-7ff7c36c8502" />
+<img width="1470" height="835" alt="Screenshot 2026-02-17 at 9 28 35 PM" src="https://github.com/user-attachments/assets/aab0c847-4f69-463d-b82e-4326e3f99750" />
+
 <br>
 <br>
 <br>
@@ -177,7 +178,9 @@ The Sports League Management System successfully provides:
 <br>
 <br>
 <br>
-<img width="1465" height="470" alt="Screenshot 2025-11-21 at 5 28 08 PM" src="https://github.com/user-attachments/assets/6d3d3835-d35a-4665-9977-915c00e0c525" />
+<img width="1469" height="837" alt="Screenshot 2026-02-17 at 9 28 09 PM" src="https://github.com/user-attachments/assets/6e4161c9-b27a-4cd8-9b47-069e984321e0" />
+
+
 4.Guest
 <br>
 <br>
