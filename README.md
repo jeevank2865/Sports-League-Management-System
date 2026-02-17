@@ -155,6 +155,29 @@ The Sports League Management System successfully provides:
 -	Automatic standings generation
 -	Scalable and maintainable architecture
 
+1. Home Page (Dashboard + Recommendations+Watchlist)
+<br>
+<br>
+<br>
+<img width="1465" height="827" alt="Screenshot 2025-11-21 at 5 27 21 PM" src="https://github.com/user-attachments/assets/32c7fc84-b5ca-4b3a-8e4e-1ef1ea473430" />
+<br>
+<br>
+<br>
+<br>
+2. Movie Details Section
+<br>
+<br>
+<br>
+<img width="1470" height="652" alt="Screenshot 2025-11-21 at 5 27 56 PM" src="https://github.com/user-attachments/assets/9a896439-eb13-4d36-b047-ee32403ce2e8" />
+<br>
+<br>
+<br>
+3. Trailer + Direct Links Section
+<br>
+<br>
+<br>
+<img width="1465" height="470" alt="Screenshot 2025-11-21 at 5 28 08 PM" src="https://github.com/user-attachments/assets/6d3d3835-d35a-4665-9977-915c00e0c525" />
+
 ## Future Enhancements
 -	Live score updates
 -	Public API integration
