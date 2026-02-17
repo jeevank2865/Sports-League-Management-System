@@ -16,13 +16,10 @@ This project is suitable for **college projects**, **placements**, and **real-wo
 - [System Architecture](#system-architecture)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Database Design](#database-design)
 - [Modules](#modules)
 - [Results](#results)
 - [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
@@ -130,5 +127,38 @@ The system follows **Django MVT (Model–View–Template)** architecture:
     ```bash
     python manage.py runserver
 
-  
+## Database Design
+The system uses a relational database with the following entities:
+	•	Users
+	•	Roles
+	•	Sports
+	•	Tournaments
+	•	Teams
+	•	Players
+	•	Matches
+	•	Points Table
+
+Foreign key relationships ensure data consistency and integrity.
+
+## Modules
+•	User Authentication & Role Management
+	•	Tournament Management
+	•	Team Management
+	•	Player Management
+	•	Match Scheduling
+	•	Result Management
+	•	Points Table Calculation
+## Results
+The Sports League Management System successfully provides:
+	•	Secure multi-role access
+	•	Accurate match and result tracking
+	•	Automatic standings generation
+	•	Scalable and maintainable architecture
+
+## Future Enhancements
+•	Live score updates
+	•	Public API integration
+	•	Player statistics and analytics
+	•	Notification system
+	•	Mobile application support
 
