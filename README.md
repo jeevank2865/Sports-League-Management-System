@@ -159,7 +159,8 @@ The Sports League Management System successfully provides:
 <br>
 <br>
 <br>
-<img width="1465" height="827" alt="Screenshot 2025-11-21 at 5 27 21 PM" src="https://github.com/user-attachments/assets/32c7fc84-b5ca-4b3a-8e4e-1ef1ea473430" />
+<img width="1470" height="831" alt="Screenshot 2026-02-17 at 9 31 03 PM" src="https://github.com/user-attachments/assets/418d1f00-bb5e-4478-9e9b-be566b8fb934" />
+
 <br>
 <br>
 <br>
