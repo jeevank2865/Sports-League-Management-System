@@ -65,11 +65,10 @@ def dashboard(request):
             'tournament': tournament,
         })
     elif role == 'referee':
-    tournament = Tournament.objects.order_by('id').first()
-    return render(request, 'tournament/referee_dashboard.html', {
+        tournament = Tournament.objects.first()
+        return render(request, 'tournament/referee_dashboard.html', {
         'tournament': tournament
     })
-    
     else:
         tournaments = Tournament.objects.all()
         return render(request, 'tournament/guest_dashboard.html', {'tournaments': tournaments})
@@ -440,6 +439,4 @@ def create_referee(request):
             return redirect('dashboard')
     else:
         form = CustomUserCreationForm()
-
     return render(request, 'tournament/create_referee.html', {'form': form})
-
