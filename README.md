@@ -184,8 +184,10 @@ The Sports League Management System successfully provides:
 4.Guest
 <br>
 <br>
+<img width="1467" height="835" alt="Screenshot 2026-02-17 at 9 29 04 PM" src="https://github.com/user-attachments/assets/4cf42f2c-3fcb-473c-8823-760786d3ed47" />
+
 <br>
-<img width="1470" height="652" alt="Screenshot 2025-11-21 at 5 27 56 PM" src="https://github.com/user-attachments/assets/9a896439-eb13-4d36-b047-ee32403ce2e8" />
+
 <br>
 <br>
 <br>
