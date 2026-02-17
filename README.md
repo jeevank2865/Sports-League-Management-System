@@ -155,11 +155,12 @@ The Sports League Management System successfully provides:
 -	Automatic standings generation
 -	Scalable and maintainable architecture
 
-1. Referee (Dashboard )
+1.Admin
 <br>
 <br>
 <br>
-<img width="1470" height="831" alt="Screenshot 2026-02-17 at 9 31 03 PM" src="https://github.com/user-attachments/assets/418d1f00-bb5e-4478-9e9b-be566b8fb934" />
+<img width="1470" height="835" alt="Screenshot 2026-02-17 at 9 28 35 PM" src="https://github.com/user-attachments/assets/aab0c847-4f69-463d-b82e-4326e3f99750" />
+
 
 <br>
 <br>
@@ -169,17 +170,21 @@ The Sports League Management System successfully provides:
 <br>
 <br>
 <br>
-<img width="1470" height="835" alt="Screenshot 2026-02-17 at 9 28 35 PM" src="https://github.com/user-attachments/assets/aab0c847-4f69-463d-b82e-4326e3f99750" />
-
-<br>
-<br>
-<br>
-3.Admin
-<br>
-<br>
-<br>
 <img width="1469" height="837" alt="Screenshot 2026-02-17 at 9 28 09 PM" src="https://github.com/user-attachments/assets/6e4161c9-b27a-4cd8-9b47-069e984321e0" />
 
+
+<br>
+<br>
+<br>
+3. Referee (Dashboard )
+<br>
+<br>
+<br>
+<img width="1470" height="831" alt="Screenshot 2026-02-17 at 9 31 03 PM" src="https://github.com/user-attachments/assets/418d1f00-bb5e-4478-9e9b-be566b8fb934" />
+<br>
+<br>
+<br>
+<br>
 
 4.Guest
 <br>
