@@ -155,7 +155,7 @@ The Sports League Management System successfully provides:
 -	Automatic standings generation
 -	Scalable and maintainable architecture
 
-1. Home Page (Dashboard + Recommendations+Watchlist)
+1. Referee (Dashboard )
 <br>
 <br>
 <br>
@@ -165,7 +165,7 @@ The Sports League Management System successfully provides:
 <br>
 <br>
 <br>
-2. Movie Details Section
+2. Captain
 <br>
 <br>
 <br>
@@ -173,11 +173,19 @@ The Sports League Management System successfully provides:
 <br>
 <br>
 <br>
-3. Trailer + Direct Links Section
+3.Admin
 <br>
 <br>
 <br>
 <img width="1465" height="470" alt="Screenshot 2025-11-21 at 5 28 08 PM" src="https://github.com/user-attachments/assets/6d3d3835-d35a-4665-9977-915c00e0c525" />
+4.Guest
+<br>
+<br>
+<br>
+<img width="1470" height="652" alt="Screenshot 2025-11-21 at 5 27 56 PM" src="https://github.com/user-attachments/assets/9a896439-eb13-4d36-b047-ee32403ce2e8" />
+<br>
+<br>
+<br>
 
 ## Future Enhancements
 -	Live score updates
